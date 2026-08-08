@@ -13,6 +13,34 @@ package and tracks its core behavior. The native engines are the same:
 `AudioTrack` in `MODE_STREAM` on Android, `AVAudioEngine` +
 `AVAudioPlayerNode` on Apple platforms.
 
+## Installation
+
+Available on Maven Central. Add `mavenCentral()` to your repositories, then:
+
+```kotlin
+// build.gradle.kts
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("com.adrianczuczka:audio-stream-player:0.1.0")
+        }
+    }
+}
+```
+
+With a version catalog:
+
+```toml
+# gradle/libs.versions.toml
+[libraries]
+audio-stream-player = { module = "com.adrianczuczka:audio-stream-player", version = "0.1.0" }
+```
+
+- In a plain Android project the same coordinate resolves to the Android
+  variant through Gradle module metadata; no `-android` suffix needed.
+- `kotlinx-coroutines-core` is an `api` dependency, so `Flow` and `StateFlow`
+  are available without declaring it yourself.
+
 ## Usage
 
 ```kotlin
@@ -23,7 +51,7 @@ player.endOfStream() // suspends until the last sample has played
 player.dispose()
 ```
 
-- Chunks may be any length — frame alignment across chunk boundaries is
+- Chunks may be any length – frame alignment across chunk boundaries is
   handled internally.
 - `sampleRate`/`channels`/`format` describe the data you feed, not the device;
   resampling is handled natively.
